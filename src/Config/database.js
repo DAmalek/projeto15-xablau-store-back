@@ -8,7 +8,8 @@ let db;
 
 try {
   await mongoClient.connect();
-  db = mongoClient.db();
+  db = mongoClient.db("xablau-store");
+
 } catch (error) {
   console.log("deu ruim no server  ", error);
 }
