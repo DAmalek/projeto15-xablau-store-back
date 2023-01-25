@@ -1,6 +1,7 @@
 import db from "../Config/database.js";
 import { loginSchema, userSchema } from "../Schemas/AuthSchemas.js";
 import { v4 as uuid } from 'uuid';
+import bcrypt from 'bcrypt';
 
 export async function userValidation(req, res, next) {
     const {name, email, password, confirm_password} = req.body;
