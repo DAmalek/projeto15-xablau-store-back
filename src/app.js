@@ -10,7 +10,7 @@ app.use(cors());
 
 dotenv.config();
 
-const mongoClient = new MongoClient();
+const mongoClient = new MongoClient(process.env.MONGO_URI);
 
 app.listen(process.env.PORT, () => {
   console.log("server rodando a todo vapor!!");
