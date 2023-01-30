@@ -51,3 +51,28 @@ export async function loginValidation(req, res, next) {
         res.status(500).send('Algo deu errado no servidor!');
     }
 }
+
+export async function authValidation(req, res, next) {
+    const { authorization } = req.headers;
+    const token = authorization?.replace("Bearer ", "");
+  
+    if (!token) return res.status(401).send("Você precisa estar logado para realizar esta operação!");
+  
+    try {
+      const session = await db.collection("sessions").findOne({ token });
+      if (!session) return res.status(401).send("Você precisa estar logado para realizar esta operação!");
+  
+      const user = await db.collection("users").findOne({ _id: session.userId })
+  
+      if (!user) return res.status(401).send("Você precisa estar logado para realizar esta operação!")
+  
+      res.locals.user = user;
+  
+    } catch (error) {
+      console.erro(error);
+      res.status(500).send("Houve um problema no servidor!");
+    }
+  
+    next();
+  
+  }
